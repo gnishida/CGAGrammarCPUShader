@@ -6,10 +6,10 @@
 #endif
 
 Camera::Camera() {
-	xrot = 0.0f;//40.0f;
+	xrot = 90.0f;//40.0f;
 	yrot = 0.0;
 	zrot = 0.0f;
-	pos = glm::vec3(0, 0, 3);
+	pos = glm::vec3(0, 0, 2.5);
 	fovy = 45.0f;
 }
 

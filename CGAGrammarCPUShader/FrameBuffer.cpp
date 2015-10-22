@@ -251,7 +251,7 @@ void FrameBuffer::Draw2DStroke(const glm::vec3& p0, const glm::vec3& p1, int str
 		stroke = &strokes_mini[stroke_index];
 	}
 
-	float scale_y = 1.0f;//max(1.0f, scale_x);
+	float scale_y = max(0.5f, scale_x);
 
 	cv::Mat_<float> R(2, 2);
 	R(0, 0) = scale_x * cosf(theta);

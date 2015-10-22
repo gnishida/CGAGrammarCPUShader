@@ -5,17 +5,21 @@
 #include "ui_MainWindow.h"
 #include "GLWidget3D.h"
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
 	Q_OBJECT
+
+private:
+	Ui::MainWindowClass ui;
+	GLWidget3D* glWidget;
+	bool fileLoaded;
+	QString filename;
 
 public:
 	MainWindow(QWidget *parent = 0, Qt::WFlags flags = 0);
 	~MainWindow();
 
-private:
-	Ui::MainWindowClass ui;
-	GLWidget3D* glWidget;
+public slots:
+	void onOpenCGAGrammar();
 };
 
 #endif // MAINWINDOW_H

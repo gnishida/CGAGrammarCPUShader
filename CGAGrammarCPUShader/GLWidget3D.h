@@ -7,6 +7,7 @@
 #include <QVector2D>
 #include <vector>
 #include "FrameBuffer.h"
+#include "CGA.h"
 
 using namespace std;
 
@@ -17,9 +18,14 @@ private:
 	Camera camera;
 	QPoint lastPos;
 	FrameBuffer* fb;
+	cga::CGA system;
+	std::vector<std::vector<Vertex> > vertices;
 
 public:
 	GLWidget3D();
+
+	void loadCGA(const std::string& filename);
+	void normalizeObjectSize(std::vector<std::vector<Vertex> >& vertices);
 
 protected:
 	void initializeGL();
