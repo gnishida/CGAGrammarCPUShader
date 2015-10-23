@@ -36,6 +36,7 @@
      <string>Test</string>
     </property>
     <addaction name="actionGenerateImages"/>
+    <addaction name="actionGenerateBuildingImages"/>
     <addaction name="actionHoge"/>
    </widget>
    <addaction name="menuFile"/>
@@ -71,6 +72,11 @@
   <action name="actionHoge">
    <property name="text">
     <string>Hoge</string>
+   </property>
+  </action>
+  <action name="actionGenerateBuildingImages">
+   <property name="text">
+    <string>Generate Building Images</string>
    </property>
   </action>
  </widget>

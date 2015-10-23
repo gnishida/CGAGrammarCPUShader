@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionOpenCGAGrammar, SIGNAL(triggered()), this, SLOT(onOpenCGAGrammar()));
 	connect(ui.actionGenerateImages, SIGNAL(triggered()), this, SLOT(onGenerateImages()));
+	connect(ui.actionGenerateBuildingImages, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages()));
 	connect(ui.actionHoge, SIGNAL(triggered()), this, SLOT(onHoge()));
 
 	glWidget = new GLWidget3D();
@@ -28,6 +29,10 @@ void MainWindow::onOpenCGAGrammar() {
 
 void MainWindow::onGenerateImages() {
 	glWidget->generateImages(256, 256, false, false);
+}
+
+void MainWindow::onGenerateBuildingImages() {
+	glWidget->generateBuildingImages(256, 256, false, false);
 }
 
 void MainWindow::onHoge() {

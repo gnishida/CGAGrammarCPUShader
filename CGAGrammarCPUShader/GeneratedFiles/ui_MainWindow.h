@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Fri Oct 23 09:40:18 2015
+** Created: Fri Oct 23 14:11:29 2015
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -31,6 +31,7 @@ public:
     QAction *actionExit;
     QAction *actionGenerateImages;
     QAction *actionHoge;
+    QAction *actionGenerateBuildingImages;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -51,6 +52,8 @@ public:
         actionGenerateImages->setObjectName(QString::fromUtf8("actionGenerateImages"));
         actionHoge = new QAction(MainWindowClass);
         actionHoge->setObjectName(QString::fromUtf8("actionHoge"));
+        actionGenerateBuildingImages = new QAction(MainWindowClass);
+        actionGenerateBuildingImages->setObjectName(QString::fromUtf8("actionGenerateBuildingImages"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -75,6 +78,7 @@ public:
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
         menuTest->addAction(actionGenerateImages);
+        menuTest->addAction(actionGenerateBuildingImages);
         menuTest->addAction(actionHoge);
 
         retranslateUi(MainWindowClass);
@@ -90,6 +94,7 @@ public:
         actionExit->setText(QApplication::translate("MainWindowClass", "Exit", 0, QApplication::UnicodeUTF8));
         actionGenerateImages->setText(QApplication::translate("MainWindowClass", "Generate Images", 0, QApplication::UnicodeUTF8));
         actionHoge->setText(QApplication::translate("MainWindowClass", "Hoge", 0, QApplication::UnicodeUTF8));
+        actionGenerateBuildingImages->setText(QApplication::translate("MainWindowClass", "Generate Building Images", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0, QApplication::UnicodeUTF8));
         menuTest->setTitle(QApplication::translate("MainWindowClass", "Test", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
