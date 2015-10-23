@@ -20,6 +20,8 @@ public:
 
 public slots:
 	void onOpenCGAGrammar();
+	void onGenerateImages();
+	void onHoge();
 };
 
 #endif // MAINWINDOW_H

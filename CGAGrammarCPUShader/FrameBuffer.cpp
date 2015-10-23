@@ -111,26 +111,17 @@ void FrameBuffer::resize(int _w, int _h) {
 	zb  = new float[w*h];
 }
 
-void FrameBuffer::loadStrokes(const std::string& dirname1, const std::string& dirname2) {
-	{
-		QDir dir(dirname1.c_str());
+void FrameBuffer::loadStrokes(const std::vector<std::string>& dirnames) {
+	strokes.resize(dirnames.size());
+
+	for (int i = 0; i < dirnames.size(); ++i) {
+		QDir dir(dirnames[i].c_str());
 
 		QStringList filters;
 		filters << "*.png";
 		QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files|QDir::NoDotAndDotDot);
-		for (int i = 0; i < fileInfoList.size(); ++i) {
-			strokes.push_back(Stroke(fileInfoList[i].absoluteFilePath().toUtf8().constData()));
-		}
-	}
-
-	{
-		QDir dir(dirname2.c_str());
-
-		QStringList filters;
-		filters << "*.png";
-		QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files|QDir::NoDotAndDotDot);
-		for (int i = 0; i < fileInfoList.size(); ++i) {
-			strokes_mini.push_back(Stroke(fileInfoList[i].absoluteFilePath().toUtf8().constData()));
+		for (int j = 0; j < fileInfoList.size(); ++j) {
+			strokes[i].push_back(Stroke(fileInfoList[j].absoluteFilePath().toUtf8().constData()));
 		}
 	}
 }
@@ -149,6 +140,8 @@ void FrameBuffer::setClearColor(const glm::vec3& clear_color) {
  * @param bgr	the given color
  */
 void FrameBuffer::clear() {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	unsigned int clr = GetColor(clear_color);
 	for (int uv = 0; uv < w*h; uv++) {
 		pix[uv] = clr;
@@ -241,17 +234,17 @@ void FrameBuffer::Draw2DStroke(const glm::vec3& p0, const glm::vec3& p1, int str
 	float scale_x;
 	float margin_size;
 	Stroke* stroke;
-	if (glm::length(p1 - p0) > 100) {
-		margin_size = 20.0f;
-		scale_x = (strokes[0].stroke_image.cols - margin_size * 2) / glm::length(p1 - p0);
-		stroke = &strokes[stroke_index];
-	} else {
-		margin_size = 10.0f;
-		scale_x = (strokes_mini[0].stroke_image.cols - margin_size * 2) / glm::length(p1 - p0);
-		stroke = &strokes_mini[stroke_index];
+
+	for (int i = 0; i < strokes.size(); ++i) {
+		if (glm::length(p1 - p0) > 192 / powf(2.0f, i) || i == strokes.size() - 1) {
+			margin_size = 20 / powf(2.0f, i);
+			stroke = &strokes[i][stroke_index];
+			scale_x = (stroke->stroke_image.cols - margin_size * 2) / glm::length(p1 - p0);
+			break;
+		}
 	}
 
-	float scale_y = max(0.5f, scale_x);
+	float scale_y = 1.0f;//max(0.5f, scale_x);
 
 	cv::Mat_<float> R(2, 2);
 	R(0, 0) = scale_x * cosf(theta);
@@ -329,7 +322,7 @@ void FrameBuffer::Draw3DStroke(Camera* camera, const glm::vec3& p0, const glm::v
 	pp0 = convertScreenCoordinate(pp0);
 	pp1 = convertScreenCoordinate(pp1);
 
-	srand(q0.x * 100 + q0.y * 50 + q0.z * 10 + q1.x * 20 + q1.y * 30 + q1.z * 40);
+	//srand(q0.x * 100 + q0.y * 50 + q0.z * 10 + q1.x * 20 + q1.y * 30 + q1.z * 40);
 
 	int stroke_index = rand() % strokes.size();
 

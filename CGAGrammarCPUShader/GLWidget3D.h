@@ -26,6 +26,8 @@ public:
 
 	void loadCGA(const std::string& filename);
 	void normalizeObjectSize(std::vector<std::vector<Vertex> >& vertices);
+	void generateImages(int image_width, int image_height, bool invertImage, bool blur);
+	void hoge();
 
 protected:
 	void initializeGL();

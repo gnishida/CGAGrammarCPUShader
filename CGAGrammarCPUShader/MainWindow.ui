@@ -31,7 +31,15 @@
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuTest">
+    <property name="title">
+     <string>Test</string>
+    </property>
+    <addaction name="actionGenerateImages"/>
+    <addaction name="actionHoge"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuTest"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -53,6 +61,16 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionGenerateImages">
+   <property name="text">
+    <string>Generate Images</string>
+   </property>
+  </action>
+  <action name="actionHoge">
+   <property name="text">
+    <string>Hoge</string>
    </property>
   </action>
  </widget>
