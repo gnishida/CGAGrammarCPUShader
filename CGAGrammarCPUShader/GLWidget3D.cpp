@@ -46,11 +46,6 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
  */
 void GLWidget3D::initializeGL() {
 	fb = new FrameBuffer(width(), height());
-	std::vector<std::string> dirnames(3);
-	dirnames[0] = "..\\strokes";
-	dirnames[1] = "..\\strokes2";
-	dirnames[2] = "..\\strokes4";
-	fb->loadStrokes(dirnames);
 }
 
 /**
@@ -69,15 +64,15 @@ void GLWidget3D::paintGL() {
 	fb->setClearColor(glm::vec3(1, 1, 1));
 	fb->clear();
 
-	fb->rasterize(&camera, vertices);
+	fb->rasterize(&camera, vertices, 0);
 	fb->draw();
 }
 
 void GLWidget3D::loadCGA(const std::string& filename) {
 	vertices.clear();
 
-	float object_width = 2.0f;
-	float object_height = 1.0f;
+	float object_width = 10.0f;
+	float object_height = 8.0f;
 
 	{
 		cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
@@ -205,7 +200,7 @@ void GLWidget3D::generateImages(int image_width, int image_height, bool invertIm
 					// render a window
 					fb->setClearColor(glm::vec3(1, 1, 1));
 					fb->clear();
-					fb->rasterize(&camera, vertices);
+					fb->rasterize(&camera, vertices, count);
 					fb->draw();
 
 					QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
