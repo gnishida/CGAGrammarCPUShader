@@ -20,6 +20,7 @@ public:
 
 public slots:
 	void onOpenCGAGrammar();
+	void onViewRefresh();
 	void onGenerateImages();
 	void onGenerateBuildingImages();
 	void onHoge();

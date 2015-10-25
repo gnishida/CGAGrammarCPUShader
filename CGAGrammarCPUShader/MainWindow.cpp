@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, 
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionOpenCGAGrammar, SIGNAL(triggered()), this, SLOT(onOpenCGAGrammar()));
+	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
 	connect(ui.actionGenerateImages, SIGNAL(triggered()), this, SLOT(onGenerateImages()));
 	connect(ui.actionGenerateBuildingImages, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages()));
 	connect(ui.actionHoge, SIGNAL(triggered()), this, SLOT(onHoge()));
@@ -25,6 +26,12 @@ void MainWindow::onOpenCGAGrammar() {
 	filename = new_filename;
 	glWidget->loadCGA(filename.toUtf8().data());
 	this->setWindowTitle("CGA Shape Grammar - " + new_filename);
+}
+
+void MainWindow::onViewRefresh() {
+	if (fileLoaded) {
+		glWidget->loadCGA(filename.toUtf8().data());
+	}
 }
 
 void MainWindow::onGenerateImages() {
