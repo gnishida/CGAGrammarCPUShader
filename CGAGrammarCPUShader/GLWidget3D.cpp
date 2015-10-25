@@ -99,6 +99,13 @@ void GLWidget3D::loadCGA(const std::string& filename) {
 }
 
 void GLWidget3D::simplifyGeometry(std::vector<std::vector<Vertex> >& vertices) {
+	// simplify the coordinates
+	for (int i = 0; i < vertices.size(); ++i) {
+		for (int k = 0; k < vertices[i].size(); ++k) {
+			vertices[i][k].position = utils::round1(vertices[i][k].position);
+		}
+	}
+
 	while (true) {
 		bool merged = false;
 
@@ -179,11 +186,6 @@ void GLWidget3D::normalizeObjectSize(std::vector<std::vector<Vertex> >& vertices
 	for (int i = 0; i < vertices.size(); ++i) {
 		for (int j = 0; j < vertices[i].size(); ++j) {
 			vertices[i][j].position = (vertices[i][j].position - center) * scale;
-			/*
-			vertices[i][j].position.x = utils::round2(vertices[i][j].position.x);
-			vertices[i][j].position.y = utils::round2(vertices[i][j].position.y);
-			vertices[i][j].position.z = utils::round2(vertices[i][j].position.z);
-			*/
 		}
 	}
 }

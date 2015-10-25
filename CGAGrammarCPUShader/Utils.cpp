@@ -35,7 +35,7 @@ bool union_polygons(const std::vector<glm::vec3>& polygon1, const std::vector<gl
 	for (int i = 0; i < polygon1.size(); ++i) {
 		glm::vec3 p = glm::vec3(inv * glm::vec4(polygon1[i], 1));
 		z = p.z;
-		pol1.push_back(Point_2(round2(p.x), round2(p.y)));
+		pol1.push_back(Point_2(round1(p.x), round1(p.y)));
 	}
 	if (pol1.is_clockwise_oriented()) {
 		pol1.reverse_orientation();
@@ -44,7 +44,7 @@ bool union_polygons(const std::vector<glm::vec3>& polygon1, const std::vector<gl
 	Polygon_2 pol2;
 	for (int i = 0; i < polygon2.size(); ++i) {
 		glm::vec3 p = glm::vec3(inv * glm::vec4(polygon2[i], 1));
-		pol2.push_back(Point_2(round2(p.x), round2(p.y)));
+		pol2.push_back(Point_2(round1(p.x), round1(p.y)));
 	}
 	if (pol2.is_clockwise_oriented()) {
 		pol2.reverse_orientation();
@@ -74,8 +74,38 @@ bool union_polygons(const std::vector<glm::vec3>& polygon1, const std::vector<gl
 	}
 }
 
+float round1(float val) {
+	if (val >= 0.0f) {
+		return (float)((int)(val * 10 + 0.5)) * 0.1f;
+	} else {
+		return (float)((int)(val * 10 - 0.5)) * 0.1f;
+	}
+}
+
 float round2(float val) {
-	return (float)((int)(val * 100 + 0.5)) * 0.01f;
+	if (val >= 0.0f) {
+		return (float)((int)(val * 100 + 0.5)) * 0.01f;
+	} else {
+		return (float)((int)(val * 100 - 0.5)) * 0.01f;
+	}
+}
+
+glm::vec3 round1(const glm::vec3& v) {
+	glm::vec3 ret;
+	ret.x = round1(v.x);
+	ret.y = round1(v.y);
+	ret.z = round1(v.z);
+
+	return ret;
+}
+
+glm::vec3 round2(const glm::vec3& v) {
+	glm::vec3 ret;
+	ret.x = round2(v.x);
+	ret.y = round2(v.y);
+	ret.z = round2(v.z);
+
+	return ret;
 }
 
 }

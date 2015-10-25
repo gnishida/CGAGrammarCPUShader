@@ -82,6 +82,15 @@ bool AABB::inside(const glm::vec3& p) const {
 }
 
 bool AABB::intersect(const AABB& aabb) const {
+	if (inside(aabb.minCorner())) return true;
+	if (inside(glm::vec3(aabb.minCorner().x, aabb.minCorner().y, aabb.maxCorner().z))) return true;
+	if (inside(glm::vec3(aabb.minCorner().x, aabb.maxCorner().y, aabb.minCorner().z))) return true;
+	if (inside(glm::vec3(aabb.minCorner().x, aabb.maxCorner().y, aabb.maxCorner().z))) return true;
+	if (inside(glm::vec3(aabb.maxCorner().x, aabb.minCorner().y, aabb.minCorner().z))) return true;
+	if (inside(glm::vec3(aabb.maxCorner().x, aabb.minCorner().y, aabb.maxCorner().z))) return true;
+	if (inside(glm::vec3(aabb.maxCorner().x, aabb.maxCorner().y, aabb.minCorner().z))) return true;
+	if (inside(aabb.maxCorner())) return true;
+
 	if (aabb.inside(corners[0])) return true;
 	if (aabb.inside(glm::vec3(corners[0].x, corners[0].y, corners[1].z))) return true;
 	if (aabb.inside(glm::vec3(corners[0].x, corners[1].y, corners[0].z))) return true;
@@ -90,6 +99,7 @@ bool AABB::intersect(const AABB& aabb) const {
 	if (aabb.inside(glm::vec3(corners[1].x, corners[0].y, corners[1].z))) return true;
 	if (aabb.inside(glm::vec3(corners[1].x, corners[1].y, corners[0].z))) return true;
 	if (aabb.inside(corners[1])) return true;
+
 	return false;
 }
 
