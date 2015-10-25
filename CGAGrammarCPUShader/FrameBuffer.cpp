@@ -74,6 +74,25 @@ glm::vec3 AABB::Size() const {
 	return corners[1] - corners[0];
 }
 
+bool AABB::inside(const glm::vec3& p) const {
+	if (p.x < corners[0].x || p.x > corners[1].x) return false;
+	if (p.y < corners[0].y || p.y > corners[1].y) return false;
+	if (p.z < corners[0].z || p.z > corners[1].z) return false;
+	return true;
+}
+
+bool AABB::intersect(const AABB& aabb) const {
+	if (aabb.inside(corners[0])) return true;
+	if (aabb.inside(glm::vec3(corners[0].x, corners[0].y, corners[1].z))) return true;
+	if (aabb.inside(glm::vec3(corners[0].x, corners[1].y, corners[0].z))) return true;
+	if (aabb.inside(glm::vec3(corners[0].x, corners[1].y, corners[1].z))) return true;
+	if (aabb.inside(glm::vec3(corners[1].x, corners[0].y, corners[0].z))) return true;
+	if (aabb.inside(glm::vec3(corners[1].x, corners[0].y, corners[1].z))) return true;
+	if (aabb.inside(glm::vec3(corners[1].x, corners[1].y, corners[0].z))) return true;
+	if (aabb.inside(corners[1])) return true;
+	return false;
+}
+
 Stroke::Stroke(const std::string& filename) {
 	stroke_image = cv::imread(filename.c_str());
 }

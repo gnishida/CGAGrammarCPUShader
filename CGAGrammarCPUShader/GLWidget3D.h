@@ -25,6 +25,7 @@ public:
 	GLWidget3D();
 
 	void loadCGA(const std::string& filename);
+	void simplifyGeometry(std::vector<std::vector<Vertex> >& vertices);
 	void normalizeObjectSize(std::vector<std::vector<Vertex> >& vertices);
 	void generateImages(int image_width, int image_height, bool invertImage, bool blur);
 	void generateBuildingImages(int image_width, int image_height, bool invertImage, bool blur);

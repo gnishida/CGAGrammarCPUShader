@@ -190,6 +190,7 @@
     <ClCompile Include="TaperOperator.cpp" />
     <ClCompile Include="TextureOperator.cpp" />
     <ClCompile Include="TranslateOperator.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -277,6 +278,7 @@
     <ClInclude Include="TaperOperator.h" />
     <ClInclude Include="TextureOperator.h" />
     <ClInclude Include="TranslateOperator.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>

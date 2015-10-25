@@ -21,6 +21,8 @@ public:
 	const glm::vec3& minCorner() const;
 	const glm::vec3& maxCorner() const;
 	glm::vec3 Size() const;
+	bool inside(const glm::vec3& p) const;
+	bool intersect(const AABB& aabb) const;
 };
 
 class Stroke {

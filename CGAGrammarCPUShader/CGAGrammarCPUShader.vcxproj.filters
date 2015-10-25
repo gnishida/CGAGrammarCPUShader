@@ -185,6 +185,9 @@
     <ClCompile Include="InsertOperator.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -332,6 +335,9 @@
     </ClInclude>
     <ClInclude Include="InsertOperator.h">
       <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

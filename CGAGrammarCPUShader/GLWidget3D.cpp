@@ -7,6 +7,7 @@
 #include "Rectangle.h"
 #include <QDir>
 #include <QTextStream>
+#include "Utils.h"
 
 #define SQR(x)	((x) * (x))
 
@@ -91,9 +92,66 @@ void GLWidget3D::loadCGA(const std::string& filename) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
 	}
 
+	simplifyGeometry(vertices);
 	normalizeObjectSize(vertices);
 	
 	updateGL();
+}
+
+void GLWidget3D::simplifyGeometry(std::vector<std::vector<Vertex> >& vertices) {
+	while (true) {
+		bool merged = false;
+
+		for (int i = 0; i < vertices.size() && !merged; ++i) {
+			glm::vec3 n1 = glm::normalize(glm::cross(vertices[i][1].position - vertices[i][0].position, vertices[i][2].position - vertices[i][0].position));
+			float d1 = glm::dot(n1, vertices[i][0].position);
+			AABB box1;
+			for (int k = 0; k < vertices[i].size(); ++k) {
+				box1.AddPoint(vertices[i][k].position);
+			}
+
+			for (int j = i + 1; j < vertices.size() && !merged; ++j) {
+				glm::vec3 n2 = glm::normalize(glm::cross(vertices[j][1].position - vertices[j][0].position, vertices[j][2].position - vertices[j][0].position));
+				if (glm::dot(n1, n2) < 0.99) continue;
+
+				float d2 = glm::dot(n2, vertices[j][0].position);
+				if (fabs(d1 - d2) > 0.01) continue;
+
+				AABB box2;
+				for (int k = 0; k < vertices[j].size(); ++k) {
+					box2.AddPoint(vertices[j][k].position);
+				}
+
+				if (!box1.intersect(box2)) continue;
+
+				// merge two polygons
+				std::vector<glm::vec3> polygon1;
+				for (int k = 0; k < vertices[i].size(); ++k) {
+					polygon1.push_back(vertices[i][k].position);
+				}
+				std::vector<glm::vec3> polygon2;
+				for (int k = 0; k < vertices[j].size(); ++k) {
+					polygon2.push_back(vertices[j][k].position);
+				}
+
+				std::vector<glm::vec3> union_polygon;
+				if (utils::union_polygons(polygon1, polygon2, union_polygon)) {
+					std::vector<Vertex> union_vertices;
+					for (int k = 0; k < union_polygon.size(); ++k) {
+						union_vertices.push_back(Vertex(union_polygon[k], glm::vec3(0, 0, 1), glm::vec4(0, 0, 0, 1)));
+					}
+
+					vertices.erase(vertices.begin() + j);
+					vertices.erase(vertices.begin() + i);
+					vertices.push_back(union_vertices);
+
+					merged = true;
+				}
+			}
+		}
+
+		if (!merged) break;
+	}
 }
 
 void GLWidget3D::normalizeObjectSize(std::vector<std::vector<Vertex> >& vertices) {
@@ -121,6 +179,11 @@ void GLWidget3D::normalizeObjectSize(std::vector<std::vector<Vertex> >& vertices
 	for (int i = 0; i < vertices.size(); ++i) {
 		for (int j = 0; j < vertices[i].size(); ++j) {
 			vertices[i][j].position = (vertices[i][j].position - center) * scale;
+			/*
+			vertices[i][j].position.x = utils::round2(vertices[i][j].position.x);
+			vertices[i][j].position.y = utils::round2(vertices[i][j].position.y);
+			vertices[i][j].position.z = utils::round2(vertices[i][j].position.z);
+			*/
 		}
 	}
 }
