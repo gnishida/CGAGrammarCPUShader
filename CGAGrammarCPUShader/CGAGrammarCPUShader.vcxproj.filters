@@ -188,6 +188,9 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CornerCutOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -338,6 +341,9 @@
     </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CornerCutOperator.h">
+      <Filter>Source Files\rule</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
